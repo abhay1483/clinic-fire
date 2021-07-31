@@ -1,0 +1,95 @@
+<div class="container-fluid p-3 p-md-4">
+    <p class="primary primary-text-500">Patient Records</p>
+    <div>
+        <ol class="breadcrumb py-1">
+            <li class="breadcrumb-item" aria-current="page">Home</li>
+            <li class="breadcrumb-item active" aria-current="page">Patient Records</li>
+        </ol>
+    </div>
+    <div class="col-md-12">
+        <div class="row">
+            <!-- SIDE PANEL -->
+            <div class="col-lg-3 col-xl-2 d-none d-lg-block">
+                <div class="px-3 h-100 primary-border-end">
+                    <p class="lead mb-4">Filters</p>
+                    <form [formGroup]="filterForm">
+                        <div>
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Patient Name</mat-label>
+                                <input formControlName="patientName" matInput
+                                    placeholder="Search by name">
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Phone</mat-label>
+                                <input formControlName="phone" matInput
+                                    placeholder="Search by phone">
+                            </mat-form-field>
+                        </div>
+                        <div class="mb-3">
+                            <button type="button" mat-raised-button (click)="getPatientList()" color="primary"
+                                class="w-100">Filter</button>
+                        </div>
+                        <div class="mb-3">
+                            <button mat-raised-button class="w-100" (click)="resetFilter()">Reset</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- / SIDE PANEL -->
+            <div class="col-lg-9 col-xl-10">
+                <p class="lead mb-4">Patients List</p>
+                <div class="d-flex justify-content-end mb-4">
+                    <button routerLink="/doctor/new-patient" type="button" mat-raised-button color="primary">New Patient</button>
+                </div>
+                <div class="mb-4">
+                    <table mat-table [dataSource]="dataSource" class="mat-elevation-z3 w-100">
+                        <!-- Row Number Column -->
+                        <ng-container matColumnDef="slNo">
+                            <th mat-header-cell *matHeaderCellDef>#</th>
+                            <td mat-cell *matCellDef="let index = index">{{index + 1}}</td>
+                        </ng-container>
+
+                        <!-- Patient Name -->
+                        <ng-container matColumnDef="patientName">
+                            <th mat-header-cell *matHeaderCellDef>Patient Name</th>
+                            <td mat-cell *matCellDef="let element">{{element.patientName}}</td>
+                        </ng-container>
+
+                        <!-- Age -->
+                        <ng-container matColumnDef="age">
+                            <th mat-header-cell *matHeaderCellDef>Age</th>
+                            <td mat-cell *matCellDef="let element">{{element.age}}</td>
+                        </ng-container>
+
+                        <!-- Gender -->
+                        <ng-container matColumnDef="gender">
+                            <th mat-header-cell *matHeaderCellDef>Gender</th>
+                            <td mat-cell *matCellDef="let element">{{element.gender}}</td>
+                        </ng-container>
+
+                        <!-- Actions -->
+                        <ng-container matColumnDef="action">
+                            <th mat-header-cell *matHeaderCellDef>Actions</th>
+                            <td mat-cell *matCellDef="let index = index">
+                                <button (click)="removePatient(index)" mat-icon-button color="warn"
+                                    aria-label="remove patient">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        <tr class="mat-row" *matNoDataRow>
+                            <td class="mat-cell text-center" colspan="5">No records available</td>
+                        </tr>
+                    </table>
+                    <mat-paginator [length]="totalRecordsCount" (page)="handlePageEvent($event)"
+                        [pageSize]="10" [pageSizeOptions]="[5, 10, 20, 100]"></mat-paginator>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

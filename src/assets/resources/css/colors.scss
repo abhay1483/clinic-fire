@@ -1,0 +1,17 @@
+@import "src/assets/resources/css/theme.scss";
+
+.primary {
+    color: $primary;
+}
+
+.primary-medium {
+    color: $primary-medium;
+}
+
+.primary-light {
+    color: $primary-light;
+}
+
+.bg-primary-light {
+    background-color: $primary-light;
+}

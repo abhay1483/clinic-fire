@@ -1,0 +1,82 @@
+<div class="container-fluid p-3 p-md-4">
+    <p class="primary primary-text-500">New Patient Record</p>
+    <div>
+        <ol class="breadcrumb py-1">
+            <li class="breadcrumb-item" aria-current="page">Home</li>
+            <li class="breadcrumb-item" routerLink="/payee/mandate-authorization" aria-current="page">Patient Records
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">New Patient Record</li>
+        </ol>
+    </div>
+    <div class="col-md-12 mt-4">
+        <div class="row">
+            <!-- SIDE PANEL -->
+            <div class="col-lg-3 col-xl-2 d-none d-lg-block">
+                <div class="px-3 h-100 primary-border-end">
+                    <p class="lead mb-4">Actions</p>
+                    <div class="mb-3">
+                        <button type="button" mat-raised-button [disabled]="!patientForm.valid" (click)="addNewRecord()"
+                            color="primary" class="w-100">Add Record</button>
+                    </div>
+                    <div class="mb-3">
+                        <button mat-raised-button class="w-100" (click)="resetForms()">Reset</button>
+                    </div>
+                    <div class="mb-3">
+                        <button mat-raised-button routerLink="/doctor/patients-list" class="w-100">Cancel</button>
+                    </div>
+                </div>
+            </div>
+            <!-- / SIDE PANEL -->
+            <div class="col-lg-9 col-xl-10">
+                <p class="lead mb-4">Patient Details</p>
+                <form [formGroup]="patientForm">
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Patient Name</mat-label>
+                                <input formControlName="patientName" matInput placeholder="Patient Name">
+                                <mat-error *ngIf="patientForm.controls.patientName.hasError('required')">Patient Name
+                                    is required</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Patient Age</mat-label>
+                                <input formControlName="patientAge" matInput placeholder="Patient Age">
+                                <mat-error *ngIf="patientForm.controls.patientAge.hasError('required')">Patient Age
+                                    is required</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Gender</mat-label>
+                                <mat-select formControlName="gender">
+                                    <mat-option *ngFor="let gender of genderList | keyvalue" [value]="gender.key">{{gender.value}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="patientForm.controls.gender.hasError('required')">
+                                    Payee is required</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Diagnosis</mat-label>
+                                <textarea formControlName="diagnosis" matInput placeholder="Diagnosis"></textarea>
+                                <mat-error *ngIf="patientForm.controls.diagnosis.hasError('required')">Diagnosis</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>Medicine</mat-label>
+                            <textarea formControlName="medicine" matInput placeholder="Medicine"></textarea>
+                            <mat-error *ngIf="patientForm.controls.medicine.hasError('required')">Medicine</mat-error>
+                        </mat-form-field>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

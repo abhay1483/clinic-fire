@@ -1,0 +1,48 @@
+<div class="container-fluid h-100 bg-login">
+    <div class="row justify-content-center align-content-center h-100">
+        <div class="col-md-3">
+            <mat-card>
+                <mat-card-subtitle class="text-center">Log In</mat-card-subtitle>
+                <form [formGroup]="loginForm" (ngSubmit)="login()">
+                    <div class="row mb-3">
+                        <div class="col">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Username</mat-label>
+                                <input formControlName="username" matInput placeholder="Enter your username">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Password</mat-label>
+                                <input formControlName="password" matInput
+                                    [type]="passwordConfig.hide ? 'password' : 'text'"
+                                    placeholder="Enter user password">
+                                <button type="button" mat-icon-button matSuffix
+                                    (click)="passwordConfig.hide = !passwordConfig.hide"
+                                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="passwordConfig.hide">
+                                    <mat-icon>{{passwordConfig.hide ? 'visibility_off' : 'visibility'}}
+                                    </mat-icon>
+                                </button>
+                                <mat-error *ngIf="loginForm.controls.password.hasError('required')">
+                                    Password Number is required</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <button type="submit" [disabled]="!loginForm.valid" mat-raised-button color="primary"
+                                class="w-100 mb-3">Login</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="text-center">
+                    <div class="logo-text">
+                        <span>clinic fire</span>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+</div>
