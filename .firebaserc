@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "clinic-fire": {
+      "hosting": {
+        "clinic-fire": [
+          "clinic-fire"
+        ]
+      }
+    }
+  }
+}
