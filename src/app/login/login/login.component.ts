@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   loginForm =  this.fb.group({
-    username: ['', Validators.required],
+    email: ['', Validators.required],
     password: ['', Validators.required]
   });
 
@@ -30,6 +30,10 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.router.navigate(['/doctor/patients-list']);
+  }
+
+  navigateToRegister() {
+    this.router.navigateByUrl('/register');
   }
 
 }

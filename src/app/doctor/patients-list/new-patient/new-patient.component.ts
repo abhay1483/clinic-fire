@@ -18,6 +18,7 @@ export class NewPatientComponent implements OnInit {
     patientName: ['', Validators.required],
     patientAge: [undefined, Validators.required],
     gender: ['', Validators.required],
+    phone: ['', Validators.required],
     diagnosis: [''],
     medicine: ['']
   });

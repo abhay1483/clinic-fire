@@ -1,48 +1,59 @@
-<div class="container-fluid h-100 bg-login">
-    <div class="row justify-content-center align-content-center h-100">
-        <div class="col-md-3">
-            <mat-card>
-                <mat-card-subtitle class="text-center">Log In</mat-card-subtitle>
-                <form [formGroup]="loginForm" (ngSubmit)="login()">
-                    <div class="row mb-3">
-                        <div class="col">
-                            <mat-form-field class="w-100" appearance="outline">
-                                <mat-label>Username</mat-label>
-                                <input formControlName="username" matInput placeholder="Enter your username">
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col">
-                            <mat-form-field class="w-100" appearance="outline">
-                                <mat-label>Password</mat-label>
-                                <input formControlName="password" matInput
-                                    [type]="passwordConfig.hide ? 'password' : 'text'"
-                                    placeholder="Enter user password">
-                                <button type="button" mat-icon-button matSuffix
-                                    (click)="passwordConfig.hide = !passwordConfig.hide"
-                                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="passwordConfig.hide">
-                                    <mat-icon>{{passwordConfig.hide ? 'visibility_off' : 'visibility'}}
-                                    </mat-icon>
-                                </button>
-                                <mat-error *ngIf="loginForm.controls.password.hasError('required')">
-                                    Password Number is required</mat-error>
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col">
-                            <button type="submit" [disabled]="!loginForm.valid" mat-raised-button color="primary"
-                                class="w-100 mb-3">Login</button>
-                        </div>
-                    </div>
-                </form>
-                <div class="text-center">
-                    <div class="logo-text">
-                        <span>clinic fire</span>
-                    </div>
+<section class="vh-100">
+    <div class="container h-100">
+        <div class="row flex-column justify-content-center align-content-center h-100 mx-0">
+            <div class="col-md-4 border rounded p-4">
+                <div class="logo-text text-center">
+                    <span><strong>Clinic</strong>Fire</span>
+                    <small class="d-block my-1">A firebase experiment</small>
                 </div>
-            </mat-card>
+                <div class="form-container text-center">
+                    <form [formGroup]="loginForm" (ngSubmit)="login()">
+                        <div class="row mb-3">
+                            <div class="col">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>E-Mail</mat-label>
+                                    <input formControlName="email" matInput placeholder="Enter your Email">
+                                    <mat-error *ngIf="loginForm.controls.email.hasError('required')">
+                                        Email is required</mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>Password</mat-label>
+                                    <input formControlName="password" matInput
+                                        [type]="passwordConfig.hide ? 'password' : 'text'"
+                                        placeholder="Enter user password">
+                                    <button type="button" mat-icon-button matSuffix
+                                        (click)="passwordConfig.hide = !passwordConfig.hide"
+                                        [attr.aria-label]="'Hide password'" [attr.aria-pressed]="passwordConfig.hide">
+                                        <mat-icon>{{passwordConfig.hide ? 'visibility_off' : 'visibility'}}
+                                        </mat-icon>
+                                    </button>
+                                    <mat-error *ngIf="loginForm.controls.password.hasError('required')">
+                                        Password Number is required</mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row flex-column">
+                            <div class="col text-center">
+                                <button type="submit" [disabled]="!loginForm.valid" mat-raised-button color="primary"
+                                    class="w-100">Login</button>
+                            </div>
+                            <div class="col my-4">
+                                <span class="mdash-4 text-primary">&mdash;&mdash;&mdash;&mdash;</span>
+                                <span class="mx-2">New to user ? </span>
+                                <span class="mdash-4 text-primary">&mdash;&mdash;&mdash;&mdash;</span>
+                            </div>
+                            <div class="col text-center mb-4">
+                                <button type="button" mat-stroked-button color="primary" class="w-100"
+                                    (click)="navigateToRegister()">Register Here</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+</section>

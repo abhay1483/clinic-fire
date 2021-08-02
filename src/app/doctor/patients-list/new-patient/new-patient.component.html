@@ -1,9 +1,9 @@
 <div class="container-fluid p-3 p-md-4">
-    <p class="primary primary-text-500">New Patient Record</p>
+    <p class="primary secondary-text-500">New Patient Record</p>
     <div>
         <ol class="breadcrumb py-1">
             <li class="breadcrumb-item" aria-current="page">Home</li>
-            <li class="breadcrumb-item" routerLink="/payee/mandate-authorization" aria-current="page">Patient Records
+            <li class="breadcrumb-item" routerLink="/doctor/patients-list" aria-current="page">Patient Records
             </li>
             <li class="breadcrumb-item active" aria-current="page">New Patient Record</li>
         </ol>
@@ -53,27 +53,40 @@
                             <mat-form-field class="w-100" appearance="outline">
                                 <mat-label>Gender</mat-label>
                                 <mat-select formControlName="gender">
-                                    <mat-option *ngFor="let gender of genderList | keyvalue" [value]="gender.key">{{gender.value}}
+                                    <mat-option *ngFor="let gender of genderList | keyvalue" [value]="gender.key">
+                                        {{gender.value}}
                                     </mat-option>
                                 </mat-select>
                                 <mat-error *ngIf="patientForm.controls.gender.hasError('required')">
-                                    Payee is required</mat-error>
+                                    Gender is required</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="col-md-6">
                             <mat-form-field class="w-100" appearance="outline">
-                                <mat-label>Diagnosis</mat-label>
-                                <textarea formControlName="diagnosis" matInput placeholder="Diagnosis"></textarea>
-                                <mat-error *ngIf="patientForm.controls.diagnosis.hasError('required')">Diagnosis</mat-error>
+                                <mat-label>Patient Phone Number</mat-label>
+                                <input formControlName="phone" matInput placeholder="Patient Phone Number">
+                                <mat-error *ngIf="patientForm.controls.patientAge.hasError('required')">Patient Phone
+                                    is required</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
                     <div class="row mt-2">
-                        <mat-form-field class="w-100" appearance="outline">
-                            <mat-label>Medicine</mat-label>
-                            <textarea formControlName="medicine" matInput placeholder="Medicine"></textarea>
-                            <mat-error *ngIf="patientForm.controls.medicine.hasError('required')">Medicine</mat-error>
-                        </mat-form-field>
+                        <div class="col-md-6">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Diagnosis</mat-label>
+                                <textarea formControlName="diagnosis" matInput placeholder="Diagnosis"></textarea>
+                                <mat-error *ngIf="patientForm.controls.diagnosis.hasError('required')">Diagnosis
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Medicine</mat-label>
+                                <textarea formControlName="medicine" matInput placeholder="Medicine"></textarea>
+                                <mat-error *ngIf="patientForm.controls.medicine.hasError('required')">Medicine
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
                     </div>
                 </form>
             </div>
