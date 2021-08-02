@@ -7,13 +7,23 @@
                     <small class="d-block my-1">A firebase experiment</small>
                 </div>
                 <div class="form-container text-center">
-                    <form [formGroup]="loginForm" (ngSubmit)="login()">
+                    <form [formGroup]="registrationForm" (ngSubmit)="register()">
+                        <div class="row mb-3">
+                            <div class="col">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>User Name</mat-label>
+                                    <input formControlName="username" matInput placeholder="Enter your Name">
+                                    <mat-error *ngIf="registrationForm.controls.username.hasError('required')">
+                                        User Name is required</mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
                         <div class="row mb-3">
                             <div class="col">
                                 <mat-form-field class="w-100" appearance="outline">
                                     <mat-label>E-Mail</mat-label>
                                     <input formControlName="email" matInput placeholder="Enter your Email">
-                                    <mat-error *ngIf="loginForm.controls.email.hasError('required')">
+                                    <mat-error *ngIf="registrationForm.controls.email.hasError('required')">
                                         Email is required</mat-error>
                                 </mat-form-field>
                             </div>
@@ -31,24 +41,24 @@
                                         <mat-icon>{{passwordConfig.hide ? 'visibility_off' : 'visibility'}}
                                         </mat-icon>
                                     </button>
-                                    <mat-error *ngIf="loginForm.controls.password.hasError('required')">
+                                    <mat-error *ngIf="registrationForm.controls.password.hasError('required')">
                                         Password Number is required</mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
                         <div class="row flex-column">
                             <div class="col text-center">
-                                <button type="submit" [disabled]="!loginForm.valid" mat-raised-button color="primary"
-                                    class="w-100">Login</button>
+                                <button type="submit" [disabled]="!registrationForm.valid" mat-raised-button color="primary"
+                                    class="w-100">Register</button>
                             </div>
                             <div class="col my-4">
                                 <span class="mdash-4 text-primary">&mdash;&mdash;&mdash;&mdash;</span>
-                                <span class="mx-2">New user ? </span>
+                                <span class="mx-2">Have credentials ? </span>
                                 <span class="mdash-4 text-primary">&mdash;&mdash;&mdash;&mdash;</span>
                             </div>
                             <div class="col text-center mb-4">
                                 <button type="button" mat-stroked-button color="primary" class="w-100"
-                                    (click)="navigateToRegister()">Register Here</button>
+                                    (click)="navigateToLogin()">Log In</button>
                             </div>
                         </div>
                     </form>
