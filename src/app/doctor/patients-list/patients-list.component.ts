@@ -3,6 +3,8 @@ import { FormBuilder } from '@angular/forms';
 import { MatTable } from '@angular/material/table';
 import { PageEvent } from '@angular/material/paginator';
 
+import { PatientService } from 'src/app/core/services';
+
 export interface PatientDetails {
   patientName: string;
   age: number;
@@ -29,7 +31,8 @@ export class PatientsListComponent implements OnInit {
   displayedColumns: string[] = ['slNo', 'patientName', 'age', 'gender', 'action'];
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private patientService: PatientService
   ) { }
 
   ngOnInit(): void {
@@ -42,7 +45,14 @@ export class PatientsListComponent implements OnInit {
       patientName: "Abhay",
       age: 25,
       gender: "Male"
-    }]
+    }];
+    this.subscribeToPatientsList();
+  }
+
+  subscribeToPatientsList() {
+    this.patientService.getPatientsList().subscribe((res) => {
+      console.log("res", res);
+    });
   }
 
   removePatient(index: number) {

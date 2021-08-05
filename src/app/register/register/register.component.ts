@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/core/services';
+import { User } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-register',
@@ -22,14 +24,22 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private userService: UserService
   ) { }
 
   ngOnInit(): void {
   }
 
   register() {
-
+    let data = {...this.registrationForm.value} as User;
+    this.userService.createUser(data).then((res)=> {
+      console.log("new user", res);
+      
+    }, (err) => {
+        console.log("error", err);
+        
+    });
   }
 
   navigateToLogin() {
