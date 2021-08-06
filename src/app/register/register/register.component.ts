@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserService } from 'src/app/core/services';
-import { User } from 'src/app/shared/models';
+import { AuthenticationService, UserService } from 'src/app/core/services';
+import { Credential } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-register',
@@ -12,7 +12,7 @@ import { User } from 'src/app/shared/models';
 export class RegisterComponent implements OnInit {
 
   registrationForm = this.fb.group({
-    username: ['', Validators.required],
+    // username: ['', Validators.required],
     email: ['', Validators.required],
     password: ['', Validators.required]
   })
@@ -25,21 +25,24 @@ export class RegisterComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private authenticationService: AuthenticationService
   ) { }
 
   ngOnInit(): void {
   }
 
   register() {
-    let data = {...this.registrationForm.value} as User;
-    this.userService.createUser(data).then((res)=> {
-      console.log("new user", res);
+    let data = {...this.registrationForm.value} as Credential;
+    this.authenticationService.signUp(data.email, data.password);
+    // this.userService.createUser(data).then((res)=> {
+    //   console.log("new user", res);
       
-    }, (err) => {
-        console.log("error", err);
+    // }, (err) => {
+    //     console.log("error", err);
         
-    });
+    // });
+
   }
 
   navigateToLogin() {

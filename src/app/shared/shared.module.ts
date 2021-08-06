@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { CdkTableModule } from '@angular/cdk/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 
@@ -28,7 +29,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatTableModule,
     CdkTableModule,
     MatPaginatorModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSnackBarModule
   ],
   exports: [
     FormsModule,
@@ -41,7 +43,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatTableModule,
     CdkTableModule,
     MatPaginatorModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSnackBarModule
   ]
 })
 export class SharedModule { }

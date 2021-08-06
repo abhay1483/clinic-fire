@@ -11,7 +11,7 @@ export class UserService {
   constructor(
     private router: Router,
     private firestore: AngularFirestore
-  ) { 
+  ) {
 
   }
 
@@ -20,8 +20,7 @@ export class UserService {
   }
 
   getUserByUsername(username: string) {
-    return this.firestore.collection('users').doc()
-      
-    })
+    //return this.firestore.collection('users').doc()
+
   }
 }

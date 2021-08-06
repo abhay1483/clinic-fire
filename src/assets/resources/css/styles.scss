@@ -45,3 +45,13 @@ body {
 .nav-shadow {
   box-shadow: 0 .125rem .25rem $primary-medium !important;
 }
+
+.error-snack {
+  background-color: #c70000;
+  color: rgb(255, 255, 255);
+}
+
+.success-snack {
+  background-color: #358801;
+  color: rgb(255, 255, 255);
+}
