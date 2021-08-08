@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DoctorComponent } from './doctor/doctor/doctor.component';
 import { LoginComponent } from './login/login/login.component';
 
 const routes: Routes = [
@@ -15,11 +14,6 @@ const routes: Routes = [
   {
     path: 'register',
     loadChildren: () => import('./register/register.module').then(m => m.RegisterModule)
-  },
-  {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full'
   }
 ];
 

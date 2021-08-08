@@ -14,15 +14,17 @@
             <div class="col-lg-3 col-xl-2 d-none d-lg-block">
                 <div class="px-3 h-100 primary-border-end">
                     <p class="lead mb-4">Actions</p>
-                    <div class="mb-3">
-                        <button type="button" mat-raised-button [disabled]="!patientForm.valid" (click)="addNewRecord()"
-                            color="primary" class="w-100">Add Record</button>
+                    <div class="mb-3" *ngIf="action == 'add' || action == 'edit'">
+                        <button type="button" mat-raised-button [disabled]="!patientForm.valid"
+                            (click)="action == 'add' ? addNewRecord() : updateRecord()" color="primary"
+                            class="w-100">{{action == 'add' ? 'Add Record': 'Update Record'}}</button>
+                    </div>
+                    <div class="mb-3" *ngIf="action == 'add'">
+                        <button mat-raised-button type="button" class="w-100" (click)="resetForms()">Reset</button>
                     </div>
                     <div class="mb-3">
-                        <button mat-raised-button class="w-100" (click)="resetForms()">Reset</button>
-                    </div>
-                    <div class="mb-3">
-                        <button mat-raised-button routerLink="/doctor/patients-list" class="w-100">Cancel</button>
+                        <button mat-raised-button type="button" routerLink="/doctor/patients-list"
+                            class="w-100">Cancel</button>
                     </div>
                 </div>
             </div>

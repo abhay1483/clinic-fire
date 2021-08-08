@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle(this.title);
-    // this.authenticationService.roleBasedRoute();
+    this.authenticationService.populate();
   }
   
 }

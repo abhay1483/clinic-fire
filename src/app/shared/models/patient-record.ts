@@ -1,8 +1,16 @@
 export interface PatientRecord {
-    id?: number;
-    name: string;
+    id?: string;
+    patientName: string;
     phone: string;
     gender: string;
-    age: string;
+    patientAge: string;
     diagnosis?: string;
+    medicine?: string;
+    createdDate?: string;
+    modifiedDate?: string;
 }
+
+export interface PatientFilter { 
+    patientName: string;
+    phone: string 
+};

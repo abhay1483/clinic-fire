@@ -1,9 +1,21 @@
 <header>
     <nav class="nav-shadow">
         <div class="container-fluid">
-            <div class="row">
+            <div class="d-flex justify-content-between">
                 <div class="logo-text">
                     <span>clinic fire</span>
+                </div>
+                <div class="my-2">
+                    <span>{{ currentUser?.displayName }}</span>
+                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="logout()">
+                            <mat-icon>logout</mat-icon>
+                            <span>Log out</span>
+                        </button>
+                    </mat-menu>
                 </div>
             </div>
         </div>

@@ -4,12 +4,8 @@ import { MatTable } from '@angular/material/table';
 import { PageEvent } from '@angular/material/paginator';
 
 import { PatientService } from 'src/app/core/services';
-
-export interface PatientDetails {
-  patientName: string;
-  age: number;
-  gender: string;
-}
+import { PatientFilter, PatientRecord } from 'src/app/shared/models';
+import { SnackbarService } from 'src/app/core/utilities';
 
 @Component({
   selector: 'app-patients-list',
@@ -18,7 +14,7 @@ export interface PatientDetails {
 })
 export class PatientsListComponent implements OnInit {
 
-  @ViewChild(MatTable) table!: MatTable<PatientDetails>;
+  @ViewChild(MatTable) table!: MatTable<PatientRecord>;
 
   filterForm = this.fb.group({
     patientName: [''],
@@ -26,33 +22,24 @@ export class PatientsListComponent implements OnInit {
   });
 
   totalRecordsCount = 2;
+  patientFilter?: PatientFilter;
+  paginationData = {
+    page: 0,
+    offset: 0,
+    pageSize: 20
+  }
 
-  dataSource: PatientDetails[] = [];
-  displayedColumns: string[] = ['slNo', 'patientName', 'age', 'gender', 'action'];
+  dataSource: PatientRecord[] = [];
+  displayedColumns: string[] = ['slNo', 'patientName', 'age', 'gender', 'createdDate', 'modifiedDate', 'action'];
 
   constructor(
     private fb: FormBuilder,
-    private patientService: PatientService
+    private patientService: PatientService,
+    private snackbarService: SnackbarService
   ) { }
 
   ngOnInit(): void {
-    this.dataSource = [{
-      patientName: "Nidhin Nochad",
-      age: 28,
-      gender: "Male"
-    },
-    {
-      patientName: "Abhay",
-      age: 25,
-      gender: "Male"
-    }];
-    this.subscribeToPatientsList();
-  }
-
-  subscribeToPatientsList() {
-    this.patientService.getPatientsList().subscribe((res) => {
-      console.log("res", res);
-    });
+    this.getPatientList();
   }
 
   removePatient(index: number) {
@@ -61,7 +48,33 @@ export class PatientsListComponent implements OnInit {
   }
 
   getPatientList() {
+    this.patientService.getPatientsList().subscribe((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        let data = doc.data();
+        let patientRecord: PatientRecord = {
+          id: doc.id,
+          patientAge: data.patientAge,
+          patientName: data.patientName,
+          phone: data.phone,
+          gender: data.gender,
+          createdDate: data.createdDate,
+          modifiedDate: data.modifiedDate
+        }
+        this.dataSource.push(patientRecord);
+      });
+      this.table.renderRows();
+    },(err) => { 
+      this.snackbarService.error(err.message);
+    });
+  }
 
+  deleteRecord(index: number, element: PatientRecord) {
+    this.patientService.deletePatientRecord(element.id as string).then((res) => {
+      this.snackbarService.success("Deleted Successfully");
+      this.removePatient(index);
+    }).catch((err) => {
+      this.snackbarService.error("Error on delete");
+    })
   }
 
   resetFilter() {
