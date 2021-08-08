@@ -45,6 +45,7 @@ export class AuthenticationService {
   sendVerificationEmail(res: firebase.auth.UserCredential) {
     res.user?.sendEmailVerification().then((res) => {
       this.snackbar.success('Verfication email sent');
+      this.router.navigate(["/login"]);
       this.logout();
     });
   }
@@ -85,7 +86,11 @@ export class AuthenticationService {
       email: user.email,
       emailVerified: false
     }
-    return userRef.set(data, { merge: true });
+    userRef.set(data, { merge: true }).then((res) => {
+      this.logout();
+    }).catch((err) => {
+      this.snackbar.error(err.message);
+    });
   }
 
   setAuthData(user: firebase.User) {
@@ -113,15 +118,5 @@ export class AuthenticationService {
       this.snackbar.error('Logout Failed');
     });
   }
-
-  /**
-   * to make user this is an admin enabled user
-   */
-  checkAdminEnabledUser(username: string) {
-
-  }
-
-  roleBasedRoute() {
-    this.router.navigate(['/login']);
-  }
+  
 }
