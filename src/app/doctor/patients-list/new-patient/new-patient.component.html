@@ -36,7 +36,8 @@
                         <div class="col-md-6">
                             <mat-form-field class="w-100" appearance="outline">
                                 <mat-label>Patient Name</mat-label>
-                                <input formControlName="patientName" matInput placeholder="Patient Name">
+                                <input formControlName="patientName" matInput placeholder="Patient Name"
+                                    [readonly]="action == 'view'">
                                 <mat-error *ngIf="patientForm.controls.patientName.hasError('required')">Patient Name
                                     is required</mat-error>
                             </mat-form-field>
@@ -44,7 +45,8 @@
                         <div class="col-md-6">
                             <mat-form-field class="w-100" appearance="outline">
                                 <mat-label>Patient Age</mat-label>
-                                <input formControlName="patientAge" matInput placeholder="Patient Age">
+                                <input formControlName="patientAge" matInput placeholder="Patient Age"
+                                    [readonly]="action == 'view'">
                                 <mat-error *ngIf="patientForm.controls.patientAge.hasError('required')">Patient Age
                                     is required</mat-error>
                             </mat-form-field>
@@ -54,8 +56,10 @@
                         <div class="col-md-6">
                             <mat-form-field class="w-100" appearance="outline">
                                 <mat-label>Gender</mat-label>
-                                <mat-select formControlName="gender">
-                                    <mat-option *ngFor="let gender of genderList | keyvalue" [value]="gender.key">
+                                <input formControlName="gender" matInput placeholder="Gender" *ngIf="action == 'view'"
+                                    readonly>
+                                <mat-select formControlName="gender" *ngIf="action != 'view'">
+                                    <mat-option *ngFor="let gender of genderList | keyvalue" [value]="gender.value">
                                         {{gender.value}}
                                     </mat-option>
                                 </mat-select>
@@ -66,7 +70,8 @@
                         <div class="col-md-6">
                             <mat-form-field class="w-100" appearance="outline">
                                 <mat-label>Patient Phone Number</mat-label>
-                                <input formControlName="phone" matInput placeholder="Patient Phone Number">
+                                <input formControlName="phone" matInput placeholder="Patient Phone Number"
+                                    [readonly]="action == 'view'">
                                 <mat-error *ngIf="patientForm.controls.patientAge.hasError('required')">Patient Phone
                                     is required</mat-error>
                             </mat-form-field>
@@ -76,7 +81,8 @@
                         <div class="col-md-6">
                             <mat-form-field class="w-100" appearance="outline">
                                 <mat-label>Diagnosis</mat-label>
-                                <textarea formControlName="diagnosis" matInput placeholder="Diagnosis"></textarea>
+                                <textarea formControlName="diagnosis" matInput placeholder="Diagnosis"
+                                    [readonly]="action == 'view'"></textarea>
                                 <mat-error *ngIf="patientForm.controls.diagnosis.hasError('required')">Diagnosis
                                 </mat-error>
                             </mat-form-field>
@@ -84,13 +90,24 @@
                         <div class="col-md-6">
                             <mat-form-field class="w-100" appearance="outline">
                                 <mat-label>Medicine</mat-label>
-                                <textarea formControlName="medicine" matInput placeholder="Medicine"></textarea>
+                                <textarea formControlName="medicine" matInput placeholder="Medicine"
+                                    [readonly]="action == 'view'"></textarea>
                                 <mat-error *ngIf="patientForm.controls.medicine.hasError('required')">Medicine
                                 </mat-error>
                             </mat-form-field>
                         </div>
                     </div>
                 </form>
+            </div>
+            <div class="d-block d-lg-none">
+                <div>
+                    <button type="button" mat-raised-button [disabled]="!patientForm.valid"
+                        (click)="action == 'add' ? addNewRecord() : updateRecord()" color="primary"
+                        class="w-100 mb-3">{{action == 'add' ? 'Add Record': 'Update Record'}}</button>
+                    <button mat-raised-button type="button" class="w-100 mb-3" (click)="resetForms()">Reset</button>
+                    <button mat-raised-button type="button" routerLink="/doctor/patients-list"
+                        class="w-100 mb-3">Cancel</button>
+                </div>
             </div>
         </div>
     </div>

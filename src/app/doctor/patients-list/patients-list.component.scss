@@ -1,0 +1,14 @@
+// ['slNo', 'patientName', 'age', 'gender', 'phone', 'createdDate', 'action']
+
+.mat-column-slNo,
+.mat-column-age,
+.mat-column-gender,
+.mat-column-action {
+    min-width: 60px;
+}
+
+.mat-column-patientName,
+.mat-column-phone,
+.mat-column-createdDate {
+    min-width: 120px;
+}

@@ -16,20 +16,16 @@
                         <div>
                             <mat-form-field class="w-100" appearance="outline">
                                 <mat-label>Patient Name</mat-label>
-                                <input formControlName="patientName" matInput
+                                <input formControlName="patientName" matInput (input)="getFilteredData()"
                                     placeholder="Search by name">
                             </mat-form-field>
                         </div>
                         <div>
                             <mat-form-field class="w-100" appearance="outline">
                                 <mat-label>Phone</mat-label>
-                                <input formControlName="phone" matInput
+                                <input formControlName="phone" matInput (input)="getFilteredData()"
                                     placeholder="Search by phone">
                             </mat-form-field>
-                        </div>
-                        <div class="mb-3">
-                            <button type="button" mat-raised-button (click)="getPatientList()" color="primary"
-                                class="w-100">Filter</button>
                         </div>
                         <div class="mb-3">
                             <button mat-raised-button class="w-100" (click)="resetFilter()">Reset</button>
@@ -41,10 +37,11 @@
             <div class="col-lg-9 col-xl-10">
                 <p class="lead mb-4">Patients List</p>
                 <div class="d-flex justify-content-end mb-4">
-                    <button routerLink="/doctor/new-patient" type="button" mat-raised-button color="primary">New Patient</button>
+                    <button routerLink="/doctor/new-patient/add" type="button" mat-raised-button color="primary">New
+                        Patient</button>
                 </div>
-                <div class="mb-4">
-                    <table mat-table [dataSource]="dataSource" class="mat-elevation-z3 w-100">
+                <div class="mb-4 mat-elevation-z3 table-responsive">
+                    <table mat-table [dataSource]="dataSource" class="w-100">
                         <!-- Row Number Column -->
                         <ng-container matColumnDef="slNo">
                             <th mat-header-cell *matHeaderCellDef>#</th>
@@ -69,17 +66,19 @@
                             <td mat-cell *matCellDef="let element">{{element.gender}}</td>
                         </ng-container>
 
+                        <!-- Phone -->
+                        <ng-container matColumnDef="phone">
+                            <th mat-header-cell *matHeaderCellDef>Phone</th>
+                            <td mat-cell *matCellDef="let element">{{element.phone}}</td>
+                        </ng-container>
+
                         <!-- Created Date -->
                         <ng-container matColumnDef="createdDate">
                             <th mat-header-cell *matHeaderCellDef>Created Date</th>
                             <td mat-cell *matCellDef="let element">{{element.createdDate | date: 'mediumDate'}}</td>
                         </ng-container>
 
-                        <!-- Modified Date -->
-                        <ng-container matColumnDef="modifiedDate">
-                            <th mat-header-cell *matHeaderCellDef>Modified Date</th>
-                            <td mat-cell *matCellDef="let element">{{element.modifiedDate | date: 'mediumDate' }}</td>
-                        </ng-container>
+                        
 
                         <!-- Actions -->
                         <ng-container matColumnDef="action">
@@ -88,6 +87,14 @@
                                 <button (click)="deleteRecord(index, element)" mat-icon-button color="warn"
                                     aria-label="remove patient">
                                     <mat-icon>delete</mat-icon>
+                                </button>
+                                <button (click)="viewRecord(element.id)" mat-icon-button color="primary"
+                                    aria-label="view patient">
+                                    <mat-icon>visibility</mat-icon>
+                                </button>
+                                <button (click)="editRecord(element.id)" mat-icon-button color="primary"
+                                    aria-label="edit patient">
+                                    <mat-icon>edit</mat-icon>
                                 </button>
                             </td>
                         </ng-container>

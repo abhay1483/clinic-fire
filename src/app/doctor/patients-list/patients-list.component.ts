@@ -6,6 +6,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { PatientService } from 'src/app/core/services';
 import { PatientFilter, PatientRecord } from 'src/app/shared/models';
 import { SnackbarService } from 'src/app/core/utilities';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-patients-list',
@@ -30,16 +31,34 @@ export class PatientsListComponent implements OnInit {
   }
 
   dataSource: PatientRecord[] = [];
-  displayedColumns: string[] = ['slNo', 'patientName', 'age', 'gender', 'createdDate', 'modifiedDate', 'action'];
+  backupDataSource: PatientRecord[] = [];
+  displayedColumns: string[] = ['slNo', 'patientName', 'age', 'gender', 'phone', 'createdDate', 'action'];
 
   constructor(
     private fb: FormBuilder,
+    private router: Router,
     private patientService: PatientService,
     private snackbarService: SnackbarService
   ) { }
 
   ngOnInit(): void {
     this.getPatientList();
+  }
+
+  getFilteredData() {
+    let filterData = this.filterForm.value as PatientFilter;
+    this.dataSource = [...this.backupDataSource];
+    if (filterData.patientName) {
+      this.dataSource = this.dataSource.filter((data) => {
+        return data.patientName.toLowerCase().includes(filterData.patientName.toLowerCase());
+      })
+    }
+    if (filterData.phone) {
+      this.dataSource = this.dataSource.filter((data) => {
+        return data.phone.toLowerCase().includes(filterData.phone.toLowerCase());
+      })
+    }
+    this.table.renderRows();
   }
 
   removePatient(index: number) {
@@ -62,8 +81,9 @@ export class PatientsListComponent implements OnInit {
         }
         this.dataSource.push(patientRecord);
       });
+      this.backupDataSource = [...this.dataSource];
       this.table.renderRows();
-    },(err) => { 
+    }, (err) => {
       this.snackbarService.error(err.message);
     });
   }
@@ -77,8 +97,25 @@ export class PatientsListComponent implements OnInit {
     })
   }
 
+  viewRecord(id: string) {
+    this.router.navigate([`/doctor/new-patient/view`], {
+      queryParams: {
+        id: id
+      }
+    });
+  }
+
+  editRecord(id: string) {
+    this.router.navigate([`/doctor/new-patient/edit`], {
+      queryParams: {
+        id: id
+      }
+    });
+  }
+
   resetFilter() {
     this.filterForm.reset();
+    this.dataSource = [...this.backupDataSource];
   }
 
   handlePageEvent(ev: PageEvent) {

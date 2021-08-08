@@ -19,19 +19,7 @@ export class PatientService {
 
   }
 
-  // params: PatientFilter
   getPatientsList() {
-    // , (ref) => {
-    //   let query: any = ref;
-    //   if (params.patientName) { query = query.where('patientName', '==', params.patientName) };
-    //   if (params.phone) { query = query.where('phone', '==', params.phone) };
-    //   return query;
-    // }
-    // let recordsRef = this.firestore.collection('patient-records');
-    // if (params.patientName) {
-    //   recordsRef = this.firestore.collection('patient-records')
-    // }
-    // <Observable<PatientRecord[]>>
     return this.firestore.collection<PatientRecord>('patient-records').get();
   }
 
@@ -40,7 +28,7 @@ export class PatientService {
   }
 
   updatePatientRecord(data: PatientRecord) {
-    return this.firestore.collection('patient-records').doc('').update(data);
+    return this.firestore.collection('patient-records').doc(data.id).update(data);
   }
 
   getPatientRecordById(id: string) {

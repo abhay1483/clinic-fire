@@ -16,7 +16,7 @@ const routes: Routes = [
         component: PatientsListComponent
       },
       {
-        path: 'new-patient/:action/:id',
+        path: 'new-patient/:action',
         component: NewPatientComponent
       }
     ]

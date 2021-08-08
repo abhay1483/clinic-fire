@@ -27,6 +27,8 @@ export class NewPatientComponent implements OnInit {
     medicine: ['']
   });
 
+  patientData?: PatientRecord;
+
   genderList = Gender;
   patientId?: string;
   action: string = '';
@@ -42,9 +44,11 @@ export class NewPatientComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.action = params["action"];
+    });
+    this.route.queryParams.subscribe((params) => {
       this.patientId = params["id"];
-      if (this.action && this.action != 'add') {
-        this.getRecordById(this.patientId as string);
+      if(this.patientId) {
+        this.getRecordById(this.patientId);
       }
     })
   }
@@ -55,8 +59,12 @@ export class NewPatientComponent implements OnInit {
 
   updateRecord() {
     let data = { ...this.patientForm.value };
+    data.id = this.patientData?.id;
+    data.createdDate = this.patientData?.createdDate;
+    data.modifiedDate = new Date().toISOString();
     this.patientService.updatePatientRecord(data).then((res) => {
       this.snackbarService.success('Patient record updated');
+      this.router.navigate(["/doctor/patients-list"]);
     }).catch((err) => {
       this.snackbarService.error('Patient record updation failed');
     });
@@ -66,6 +74,17 @@ export class NewPatientComponent implements OnInit {
     this.patientService.getPatientRecordById(id).subscribe((doc) => {
       if (doc.exists) {
         let data = doc.data() as PatientRecord;
+        this.patientData = {
+          id: doc.id,
+          patientName: data.patientName,
+          patientAge: data.patientAge,
+          gender: data.gender,
+          phone: data.phone,
+          diagnosis: data.diagnosis,
+          medicine: data.medicine,
+          createdDate: data.createdDate,
+          modifiedDate: data.modifiedDate
+        };
         this.patientForm.patchValue({
           patientName: data.patientName,
           patientAge: data.patientAge,
@@ -84,8 +103,11 @@ export class NewPatientComponent implements OnInit {
 
   addNewRecord() {
     let data = { ...this.patientForm.value };
+    data.createdDate = new Date().toISOString();
+    data.modifiedDate = new Date().toISOString();
     this.patientService.storePatientsRecord(data).then((res) => {
       this.snackbarService.success('Patient record added');
+      this.router.navigate(["/doctor/patients-list"]);
     }).catch((err) => {
       this.snackbarService.error('Patient record submission failed');
     })
