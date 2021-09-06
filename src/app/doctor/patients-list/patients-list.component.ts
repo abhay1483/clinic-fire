@@ -22,6 +22,8 @@ export class PatientsListComponent implements OnInit {
     phone: ['']
   });
 
+  phoneNameFilter?: string;
+
   totalRecordsCount = 2;
   patientFilter?: PatientFilter;
   paginationData = {
@@ -56,6 +58,16 @@ export class PatientsListComponent implements OnInit {
     if (filterData.phone) {
       this.dataSource = this.dataSource.filter((data) => {
         return data.phone.toLowerCase().includes(filterData.phone.toLowerCase());
+      })
+    }
+    this.table.renderRows();
+  }
+
+  filterByPhoneName() {
+    this.dataSource = [...this.backupDataSource];
+    if (this.phoneNameFilter) {
+      this.dataSource = this.dataSource.filter((data) => {
+        return this.phoneNameFilter && (data.patientName.toLowerCase().includes(this.phoneNameFilter.toLowerCase()) || data.phone.includes(this.phoneNameFilter));
       })
     }
     this.table.renderRows();

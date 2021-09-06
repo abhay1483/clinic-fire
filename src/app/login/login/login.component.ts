@@ -32,7 +32,6 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.authenticationService.signIn(this.loginForm.value);
-    // this.router.navigate(['/doctor/patients-list']);
   }
 
   navigateToRegister() {

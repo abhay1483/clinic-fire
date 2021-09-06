@@ -42,10 +42,10 @@ export class AuthenticationService {
     });
   }
 
-  sendVerificationEmail(res: firebase.auth.UserCredential) {
-    res.user?.sendEmailVerification().then((res) => {
+  sendVerificationEmail(userCredential: firebase.auth.UserCredential) {
+    userCredential.user?.sendEmailVerification().then((res) => {
       this.snackbar.success('Verfication email sent');
-      this.logout();
+      this.updateUserData(userCredential.user);
     });
   }
 
@@ -65,7 +65,6 @@ export class AuthenticationService {
       .then(res => {
         if (!res.user?.emailVerified) {
           this.snackbar.error('Verify your e-mail address to sign in');
-          this.updateUserData(res.user);
         }
         else if (res.user?.emailVerified) {
           this.snackbar.success('Login Successful');
@@ -78,17 +77,18 @@ export class AuthenticationService {
       });
   }
 
-  private updateUserData(user: any) {
-    const userRef = this.angularFireStore.doc(`users/${user.uid}`);
+  private updateUserData(user: firebase.User | null) {
+    const userRef = this.angularFireStore.doc(`users/${user?.uid}`);
     const data: User = {
-      uid: user.uid,
-      email: user.email,
+      uid: user?.uid as string,
+      email: user?.email as string,
       emailVerified: false
     }
     userRef.set(data, { merge: true }).then((res) => {
       this.logout();
     }).catch((err) => {
       this.snackbar.error(err.message);
+      this.logout();
     });
   }
 

@@ -40,6 +40,13 @@
                     <button routerLink="/doctor/new-patient/add" type="button" mat-raised-button color="primary">New
                         Patient</button>
                 </div>
+                <div class="d-block d-lg-none">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Filter</mat-label>
+                        <input [(ngModel)]="phoneNameFilter" matInput (input)="filterByPhoneName()"
+                            placeholder="Search by name or phone">
+                    </mat-form-field>
+                </div>
                 <div class="mb-4 mat-elevation-z3 table-responsive">
                     <table mat-table [dataSource]="dataSource" class="w-100">
                         <!-- Row Number Column -->
