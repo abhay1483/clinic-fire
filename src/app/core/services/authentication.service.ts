@@ -31,7 +31,7 @@ export class AuthenticationService {
 
   populate() {
     this.angularFireAuth.authState.subscribe((user) => {
-      if(user) {
+      if(user?.emailVerified) {
         this.setAuthData(user);
         this.router.navigate(['/doctor/patients-list']);
       }
@@ -45,7 +45,6 @@ export class AuthenticationService {
   sendVerificationEmail(res: firebase.auth.UserCredential) {
     res.user?.sendEmailVerification().then((res) => {
       this.snackbar.success('Verfication email sent');
-      this.router.navigate(["/login"]);
       this.logout();
     });
   }
@@ -67,10 +66,10 @@ export class AuthenticationService {
         if (!res.user?.emailVerified) {
           this.snackbar.error('Verify your e-mail address to sign in');
           this.updateUserData(res.user);
-          return;
         }
         else if (res.user?.emailVerified) {
           this.snackbar.success('Login Successful');
+          this.setAuthData(res.user);
           this.router.navigate(['/doctor/patients-list']);
         }
       })

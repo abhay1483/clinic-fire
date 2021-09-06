@@ -12,7 +12,6 @@ import { Credential } from 'src/app/shared/models';
 export class RegisterComponent implements OnInit {
 
   registrationForm = this.fb.group({
-    // username: ['', Validators.required],
     email: ['', Validators.required],
     password: ['', Validators.required]
   })
@@ -35,14 +34,6 @@ export class RegisterComponent implements OnInit {
   register() {
     let data = {...this.registrationForm.value} as Credential;
     this.authenticationService.signUp(data.email, data.password);
-    // this.userService.createUser(data).then((res)=> {
-    //   console.log("new user", res);
-      
-    // }, (err) => {
-    //     console.log("error", err);
-        
-    // });
-
   }
 
   navigateToLogin() {
