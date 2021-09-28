@@ -1,11 +1,5 @@
 {
-  "targets": {
-    "clinic-fire": {
-      "hosting": {
-        "clinic-fire": [
-          "clinic-fire"
-        ]
-      }
-    }
+  "projects": {
+    "default": "clinic-fire"
   }
 }
